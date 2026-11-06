@@ -3,7 +3,7 @@ declare(strict_types=1);
 /**
  * Additive community starter content. Does NOT modify existing incidents, alerts,
  * evacuation locations, account credentials, or custom admin entries.
- * Phone numbers were cross-checked against government/agency pages in Nov 2026.
+ * Existing starter phone numbers are retained without claiming recent verification.
  * They may change; administrators must re-verify before real-world deployment.
  */
 function seedCommunityDirectory(PDO $database): array {
