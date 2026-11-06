@@ -1,0 +1,9 @@
+DIRMS/storage/private/*
+!DIRMS/storage/private/.htaccess
+DIRMS/uploads/*
+!DIRMS/uploads/.htaccess
+.env
+*.log
+work/
+
+**/node_modules/

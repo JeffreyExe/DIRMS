@@ -1,0 +1,9 @@
+Options -Indexes
+<FilesMatch "(^\.|^(config\.php|schema\.sql|router\.php|.*\.log)$)">
+    Require all denied
+</FilesMatch>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule (^|/)\. - [F,L]
+    RewriteRule ^(?:app|storage|uploads|migrations|docs)(?:/|$) - [F,L]
+</IfModule>

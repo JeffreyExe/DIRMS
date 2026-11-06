@@ -1,7 +1,12 @@
 <?php
 declare(strict_types=1);
 
+date_default_timezone_set('UTC');
+require_once __DIR__ . '/security-headers.php';
+securityHeaders();
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_name('DIRMSSESSID');
     ini_set('session.use_strict_mode', '1');
     ini_set('session.cookie_httponly', '1');
     ini_set('session.cookie_samesite', 'Lax');
@@ -25,6 +30,7 @@ function db(bool $withDatabase = true): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
+    $instances[$key]->exec("SET time_zone = '+00:00'");
     return $instances[$key];
 }
 
@@ -35,7 +41,9 @@ function jsonResponse(array $data, int $status = 200): never {
     echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     exit;
 }
-function fail(string $message, int $status = 400): never { jsonResponse(['ok' => false, 'message' => $message], $status); }
+function fail(string $message, int $status = 400): never {
+    jsonResponse(['ok' => false, 'message' => $message], $status);
+}
 function csrfToken(): string {
     if (!isset($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
     return $_SESSION['csrf'];
