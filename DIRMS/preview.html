@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#082844" />
+    <meta
+      name="description"
+      content="DIRMS community disaster alerts, incident reporting, evacuation centers and preparedness."
+    />
+    <title>Home | DIRMS</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body data-page="public" data-view="home">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="preview.html" aria-label="DIRMS home"
+          ><span class="brand-mark"
+            ><svg viewBox="0 0 36 40" aria-hidden="true">
+              <path
+                d="M18 2 33 8v13c0 10-6 15-15 18C9 36 3 31 3 21V8Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+              <path d="M9 20 18 11l9 9h-5v9h-8v-9Z" fill="currentColor" />
+              <path d="M15 24h6" stroke="#fff" stroke-width="2" /></svg></span
+          ><span class="brand-type"
+            ><strong>DIRMS</strong
+            ><small>Community Disaster Management</small></span
+          ></a
+        >
+        <button
+          class="mobile-menu"
+          type="button"
+          id="menuToggle"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <nav class="top-nav" id="topNav" aria-label="Primary navigation">
+          <a class="selected" aria-current="page" href="preview.html">Home</a>
+          <a href="preview-alerts.html">Alerts</a>
+          <a href="preview-report-incident.html">Report Incident</a>
+          <a href="preview-evacuation-centers.html">Evacuation Centers</a>
+          <a href="preview-hotlines.html">Hotlines</a>
+          <a href="preview-tips.html">Preparedness</a>
+          <a href="preview-news.html">News</a>
+          <a href="preview-my-reports.html" id="myReportsNav" hidden
+            >My Reports</a
+          >
+          <a href="admin-preview.html" id="adminNav" hidden>Admin Dashboard</a>
+          <a class="nav-login" href="preview-login.html" id="accountButton"
+            >Login / Register</a
+          >
+          <button type="button" id="navLogout" class="nav-logout" hidden>
+            Log out
+          </button>
+        </nav>
+      </div>
+    </header>
+    <div class="safety-strip" id="safetyStrip">
+      <span class="pulse-dot"></span
+      ><span id="safetyText"
+        >Demo information is not a real-time emergency alert. Check official
+        sources.</span
+      >
+    </div>
+    <div
+      id="toastRegion"
+      class="toast-region"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <main class="page-main home-only" id="home">
+      <div class="home-stack">
+        <section aria-labelledby="heroTitle" class="hero panel">
+          <div class="hero-copy">
+            <span class="eyebrow"
+              ><span class="eyebrow-line"></span> A SAFER COMMUNITY STARTS
+              HERE</span
+            >
+            <h1 id="heroTitle">Stay Informed.<br /><span>Stay Safe.</span></h1>
+            <p>
+              Your community's hub for disaster alerts, incident reporting, and
+              emergency preparedness in
+              <strong id="heroCity">San Pablo City, Laguna.</strong>
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-danger" href="preview-report-incident.html"
+                ><span>⚠</span> Report Incident</a
+              ><a class="btn btn-blue" href="preview-alerts.html"
+                ><span>♧</span> View Alerts</a
+              >
+            </div>
+          </div>
+          <img
+            alt="Illustration of a family standing in San Pablo City"
+            class="hero-art"
+            src="assets/img/hero-town.svg"
+          />
+        </section>
+        <section aria-labelledby="latestTitle" class="panel latest-panel">
+          <div class="section-head">
+            <h2 id="latestTitle">Latest Disaster Alert</h2>
+            <span class="head-ornament"></span>
+          </div>
+          <div class="latest-alert" id="latestAlert">
+            <div class="skeleton" style="height: 84px"></div>
+          </div>
+        </section>
+        <section aria-labelledby="prepareTitle" class="panel prepared-feature">
+          <div class="prepare-feature-copy">
+            <span class="feature-kicker">DIRMS • FAMILY SAFETY</span>
+            <h2 id="prepareTitle">
+              Be ready <span>before</span> disaster strikes.
+            </h2>
+            <p>
+              A few small steps today can protect your family when every second
+              counts.
+            </p>
+            <ul class="prepare-checks">
+              <li>Pack a family go bag</li>
+              <li>Know your nearest safe route</li>
+              <li>Follow official alerts and advisories</li>
+            </ul>
+            <a class="btn btn-blue" href="preview-tips.html"
+              >Explore Safety Tips <span aria-hidden="true">→</span></a
+            >
+          </div>
+          <img
+            alt="Illustration of an emergency backpack, first aid kit and safety supplies"
+            class="prepare-feature-art"
+            loading="lazy"
+            src="assets/img/preparedness-kit.svg"
+          />
+        </section>
+      </div>
+      <div class="home-endnote">
+        <span class="pulse-dot"></span> Emergency? Call
+        <a href="tel:911">911</a>. Sample site records may not reflect real-time
+        conditions.
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-identity">
+          <span class="footer-seal">♜</span
+          ><span
+            ><strong>COMMUNITY DISASTER SAFETY</strong
+            ><small>San Pablo City, Laguna · DIRMS Demo Project</small></span
+          >
+        </div>
+        <div class="footer-links">
+          <a href="preview.html">Back to top ↑</a
+          ><a href="preview-tips.html">Safety resources</a
+          ><span id="footerEmail"></span>
+        </div>
+        <p>© 2026 DIRMS · A community disaster preparedness project.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" hidden="" id="centerMapModal">
+      <div
+        aria-labelledby="centerMapTitle"
+        aria-modal="true"
+        class="modal-card center-map-modal"
+        role="dialog"
+      >
+        <button
+          aria-label="Close map"
+          class="modal-close"
+          data-close-modal=""
+          type="button"
+        >
+          ×</button
+        ><span class="eyebrow">EVACUATION CENTER LOCATION</span>
+        <h2 id="centerMapTitle">Evacuation center map</h2>
+        <p class="map-address" id="centerMapAddress"></p>
+        <p class="map-accuracy" id="centerMapAccuracy"></p>
+        <div class="center-map-frame" id="centerMapFrame"></div>
+        <div class="map-actions">
+          <a
+            class="btn btn-blue"
+            href="https://www.google.com/maps"
+            id="centerMapOpenGoogle"
+            rel="noopener noreferrer"
+            target="_blank"
+            >Open Google Maps ↗</a
+          ><button class="btn btn-outline" data-close-modal="" type="button">
+            Close
+          </button>
+        </div>
+        <p class="map-fineprint">
+          Maps are provided for navigation only. Confirm the designated
+          evacuation site and access routes with local disaster officials before
+          traveling.
+        </p>
+      </div>
+    </div>
+    <div class="modal-backdrop" hidden="" id="detailModal">
+      <div
+        aria-labelledby="detailTitle"
+        aria-modal="true"
+        class="modal-card detail-card"
+        role="dialog"
+      >
+        <button
+          aria-label="Close"
+          class="modal-close"
+          data-close-modal=""
+          type="button"
+        >
+          ×
+        </button>
+        <div id="detailContent"></div>
+      </div>
+    </div>
+    <script>
+      window.BS_PREVIEW_MODE = true;
+    </script>
+    <script src="assets/js/demo-data.js"></script>
+    <script src="assets/js/app.js" defer></script>
+  </body>
+</html>

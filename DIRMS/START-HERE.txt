@@ -1,0 +1,38 @@
+DIRMS v4 — MULTIPAGE FUNCTIONAL WEBSITE
+================================================
+
+The included folder in the ZIP is named: DIRMS
+
+1. Extract the ZIP.
+2. Copy "DIRMS" to C:\xampp\htdocs\
+3. Open XAMPP Control Panel and start Apache + MySQL.
+4. First install only: open http://localhost/DIRMS/setup.php
+   Create your own administrator email/password (at least 12 characters).
+5. Normal website: http://localhost/DIRMS/index.php
+6. Admin login: http://localhost/DIRMS/login.php
+   Sign in with the administrator credentials from setup.php.
+7. Admin dashboard: http://localhost/DIRMS/admin.php
+
+If this is an UPDATE to your current installation:
+  • BACK UP your old folder and export the existing database in phpMyAdmin.
+  • Keep your original config.php, uploads/ directory and MySQL database.
+  • Copy the new website files over the old code, keeping those files safely.
+  • Do NOT rerun a new database or recreate admin account.
+  • Existing admin credentials continue working.
+  • Optional: admin opens update-directory.php to add missing directory entries.
+
+PAGES:
+  index.php, alerts.php, report-incident.php, evacuation-centers.php,
+  hotlines.php, tips.php, news.php, login.php, register.php,
+  my-reports.php, admin.php.
+
+For design-only demonstration, open preview.html in a web browser.
+Use PHP pages through XAMPP for real database submissions.
+
+WARNINGS:
+  This is a demo/student project, not an official emergency-response system.
+  Report Incident does not call a rescue team automatically. In danger, call 911.
+  Example warnings and sample evacuation centers are NOT real-time information.
+  Google Maps needs Internet; exact pins require verified GPS coordinates.
+
+MORE HELP: Read README.md in the project folder.

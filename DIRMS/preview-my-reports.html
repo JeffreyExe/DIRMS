@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#082844" />
+    <meta
+      name="description"
+      content="DIRMS community disaster alerts, incident reporting, evacuation centers and preparedness."
+    />
+    <title>My Reports | DIRMS</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body data-page="public" data-view="my-reports">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="preview.html" aria-label="DIRMS home"
+          ><span class="brand-mark"
+            ><svg viewBox="0 0 36 40" aria-hidden="true">
+              <path
+                d="M18 2 33 8v13c0 10-6 15-15 18C9 36 3 31 3 21V8Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+              <path d="M9 20 18 11l9 9h-5v9h-8v-9Z" fill="currentColor" />
+              <path d="M15 24h6" stroke="#fff" stroke-width="2" /></svg></span
+          ><span class="brand-type"
+            ><strong>DIRMS</strong
+            ><small>Community Disaster Management</small></span
+          ></a
+        >
+        <button
+          class="mobile-menu"
+          type="button"
+          id="menuToggle"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <nav class="top-nav" id="topNav" aria-label="Primary navigation">
+          <a href="preview.html">Home</a>
+          <a href="preview-alerts.html">Alerts</a>
+          <a href="preview-report-incident.html">Report Incident</a>
+          <a href="preview-evacuation-centers.html">Evacuation Centers</a>
+          <a href="preview-hotlines.html">Hotlines</a>
+          <a href="preview-tips.html">Preparedness</a>
+          <a href="preview-news.html">News</a>
+          <a href="preview-my-reports.html" id="myReportsNav" hidden
+            >My Reports</a
+          >
+          <a href="admin-preview.html" id="adminNav" hidden>Admin Dashboard</a>
+          <a class="nav-login" href="preview-login.html" id="accountButton"
+            >Login / Register</a
+          >
+          <button type="button" id="navLogout" class="nav-logout" hidden>
+            Log out
+          </button>
+        </nav>
+      </div>
+    </header>
+    <div class="safety-strip" id="safetyStrip">
+      <span class="pulse-dot"></span
+      ><span id="safetyText"
+        >Demo information is not a real-time emergency alert. Check official
+        sources.</span
+      >
+    </div>
+    <div
+      id="toastRegion"
+      class="toast-region"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <main class="page-main interior-page interior-my-reports">
+      <div class="interior-intro">
+        <span class="feature-kicker">REPORT STATUS TRACKING</span>
+        <h1>My Incident Reports</h1>
+        <p>
+          View your submitted incidents and the latest administrator review
+          status.
+        </p>
+      </div>
+      <div class="interior-content">
+        <section class="panel my-reports-panel">
+          <div class="section-head">
+            <h2>Submitted Reports</h2>
+            <a class="btn btn-blue btn-sm" href="preview-report-incident.html"
+              >+ Submit another report</a
+            >
+          </div>
+          <div class="my-reports-guide">
+            Only reports submitted while signed into this account can appear
+            here. Guest reports must be followed up directly with the disaster
+            office using their reference number.
+          </div>
+          <div id="myReportsNotice" role="status" aria-live="polite"></div>
+          <div id="myReportsList" class="my-reports-list">
+            <div class="skeleton" style="height: 130px"></div>
+          </div>
+          <button
+            type="button"
+            id="refreshMyReports"
+            class="btn btn-outline btn-sm"
+          >
+            ↻ Refresh My Reports
+          </button>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-identity">
+          <span class="footer-seal">♜</span
+          ><span
+            ><strong>COMMUNITY DISASTER SAFETY</strong
+            ><small>San Pablo City, Laguna · DIRMS Demo Project</small></span
+          >
+        </div>
+        <div class="footer-links">
+          <a href="preview.html">Back to top ↑</a
+          ><a href="preview-tips.html">Safety resources</a
+          ><span id="footerEmail"></span>
+        </div>
+        <p>© 2026 DIRMS · A community disaster preparedness project.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" hidden="" id="centerMapModal">
+      <div
+        aria-labelledby="centerMapTitle"
+        aria-modal="true"
+        class="modal-card center-map-modal"
+        role="dialog"
+      >
+        <button
+          aria-label="Close map"
+          class="modal-close"
+          data-close-modal=""
+          type="button"
+        >
+          ×</button
+        ><span class="eyebrow">EVACUATION CENTER LOCATION</span>
+        <h2 id="centerMapTitle">Evacuation center map</h2>
+        <p class="map-address" id="centerMapAddress"></p>
+        <p class="map-accuracy" id="centerMapAccuracy"></p>
+        <div class="center-map-frame" id="centerMapFrame"></div>
+        <div class="map-actions">
+          <a
+            class="btn btn-blue"
+            href="https://www.google.com/maps"
+            id="centerMapOpenGoogle"
+            rel="noopener noreferrer"
+            target="_blank"
+            >Open Google Maps ↗</a
+          ><button class="btn btn-outline" data-close-modal="" type="button">
+            Close
+          </button>
+        </div>
+        <p class="map-fineprint">
+          Maps are provided for navigation only. Confirm the designated
+          evacuation site and access routes with local disaster officials before
+          traveling.
+        </p>
+      </div>
+    </div>
+    <div class="modal-backdrop" hidden="" id="detailModal">
+      <div
+        aria-labelledby="detailTitle"
+        aria-modal="true"
+        class="modal-card detail-card"
+        role="dialog"
+      >
+        <button
+          aria-label="Close"
+          class="modal-close"
+          data-close-modal=""
+          type="button"
+        >
+          ×
+        </button>
+        <div id="detailContent"></div>
+      </div>
+    </div>
+    <script>
+      window.BS_PREVIEW_MODE = true;
+    </script>
+    <script src="assets/js/demo-data.js"></script>
+    <script src="assets/js/app.js" defer></script>
+  </body>
+</html>

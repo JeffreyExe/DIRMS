@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#082844" />
+    <meta
+      name="description"
+      content="DIRMS community disaster alerts, incident reporting, evacuation centers and preparedness."
+    />
+    <title>Report | DIRMS</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body data-page="public" data-view="report">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="preview.html" aria-label="DIRMS home"
+          ><span class="brand-mark"
+            ><svg viewBox="0 0 36 40" aria-hidden="true">
+              <path
+                d="M18 2 33 8v13c0 10-6 15-15 18C9 36 3 31 3 21V8Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+              <path d="M9 20 18 11l9 9h-5v9h-8v-9Z" fill="currentColor" />
+              <path d="M15 24h6" stroke="#fff" stroke-width="2" /></svg></span
+          ><span class="brand-type"
+            ><strong>DIRMS</strong
+            ><small>Community Disaster Management</small></span
+          ></a
+        >
+        <button
+          class="mobile-menu"
+          type="button"
+          id="menuToggle"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <nav class="top-nav" id="topNav" aria-label="Primary navigation">
+          <a href="preview.html">Home</a>
+          <a href="preview-alerts.html">Alerts</a>
+          <a
+            class="selected"
+            aria-current="page"
+            href="preview-report-incident.html"
+            >Report Incident</a
+          >
+          <a href="preview-evacuation-centers.html">Evacuation Centers</a>
+          <a href="preview-hotlines.html">Hotlines</a>
+          <a href="preview-tips.html">Preparedness</a>
+          <a href="preview-news.html">News</a>
+          <a href="preview-my-reports.html" id="myReportsNav" hidden
+            >My Reports</a
+          >
+          <a href="admin-preview.html" id="adminNav" hidden>Admin Dashboard</a>
+          <a class="nav-login" href="preview-login.html" id="accountButton"
+            >Login / Register</a
+          >
+          <button type="button" id="navLogout" class="nav-logout" hidden>
+            Log out
+          </button>
+        </nav>
+      </div>
+    </header>
+    <div class="safety-strip" id="safetyStrip">
+      <span class="pulse-dot"></span
+      ><span id="safetyText"
+        >Demo information is not a real-time emergency alert. Check official
+        sources.</span
+      >
+    </div>
+    <div
+      id="toastRegion"
+      class="toast-region"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <main class="page-main interior-page interior-report">
+      <div class="interior-intro">
+        <span class="feature-kicker">COMMUNITY INCIDENT REPORTING</span>
+        <h1>Report an Incident</h1>
+        <p>
+          Tell the disaster response team what happened, where it happened, and
+          include a photo if available.
+        </p>
+      </div>
+      <div class="interior-content">
+        <section
+          aria-labelledby="reportTitle"
+          class="panel report-column"
+          id="report"
+        >
+          <div class="section-head">
+            <h2 id="reportTitle">Report Incident</h2>
+          </div>
+          <p class="section-sub">
+            Help keep your community safe. Provide accurate details about the
+            incident.
+          </p>
+          <div
+            aria-live="polite"
+            class="report-receipt"
+            hidden=""
+            id="reportReceipt"
+            role="status"
+          >
+            <span class="receipt-symbol">✓</span>
+            <div>
+              <h3 id="receiptTitle">Incident report submitted</h3>
+              <p id="receiptText"></p>
+              <div class="receipt-reference">
+                Reference: <strong id="receiptId"></strong
+                ><button id="copyReportReference" type="button">
+                  Copy reference
+                </button>
+              </div>
+              <button
+                class="receipt-link"
+                hidden=""
+                id="receiptMyReports"
+                type="button"
+              >
+                View my submitted reports →
+              </button>
+            </div>
+          </div>
+          <form
+            class="form-stack"
+            enctype="multipart/form-data"
+            id="incidentForm"
+          >
+            <div
+              class="form-error"
+              hidden=""
+              id="reportFormError"
+              role="alert"
+            ></div>
+            <label
+              >Incident Type <b>*</b
+              ><select name="incident_type" required="">
+                <option value="">Select type of incident...</option>
+                <option>Flood</option>
+                <option>Fire</option>
+                <option>Landslide</option>
+                <option>Earthquake</option>
+                <option>Typhoon</option>
+                <option>Road Block</option>
+                <option>Other</option>
+              </select></label
+            ><label
+              >Location / Barangay <b>*</b
+              ><input
+                maxlength="255"
+                minlength="3"
+                name="location"
+                placeholder="Enter location / barangay"
+                required="" /></label
+            ><label
+              >Description <b>*</b
+              ><textarea
+                maxlength="3000"
+                minlength="10"
+                name="description"
+                placeholder="Describe what happened, where and when..."
+                required=""
+                rows="4"
+              ></textarea>
+            </label>
+            <div class="form-2col">
+              <label
+                >Your Name <small>(optional)</small
+                ><input
+                  maxlength="120"
+                  name="reporter_name"
+                  placeholder="Full name" /></label
+              ><label
+                >Contact <small>(optional)</small
+                ><input
+                  maxlength="80"
+                  name="reporter_contact"
+                  placeholder="Phone / email"
+              /></label>
+            </div>
+            <label class="upload-field" for="photoInput"
+              ><strong>Upload Photo <small>(optional, max 5MB)</small></strong
+              ><span class="upload-control"
+                ><span class="upload-icon">▧</span
+                ><span id="uploadLabel"
+                  >Choose JPG, PNG or WebP image</span
+                ></span
+              ><input
+                accept="image/jpeg,image/png,image/webp"
+                id="photoInput"
+                name="photo"
+                type="file" /></label
+            ><img
+              alt="Selected incident photo"
+              class="upload-preview"
+              hidden=""
+              id="photoPreview"
+            /><button
+              class="btn btn-danger submit-button"
+              id="reportSubmit"
+              type="submit"
+            >
+              Submit Incident Report <span>→</span>
+            </button>
+            <p class="privacy-note">
+              Reports are reviewed by authorized administrators. Do not include
+              unnecessary private information.
+            </p>
+          </form>
+        </section>
+      </div>
+      <p class="interior-note">
+        For urgent help, call 911 first. An online report is not an emergency
+        dispatch request.
+      </p>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-identity">
+          <span class="footer-seal">♜</span
+          ><span
+            ><strong>COMMUNITY DISASTER SAFETY</strong
+            ><small>San Pablo City, Laguna · DIRMS Demo Project</small></span
+          >
+        </div>
+        <div class="footer-links">
+          <a href="preview.html">Back to top ↑</a
+          ><a href="preview-tips.html">Safety resources</a
+          ><span id="footerEmail"></span>
+        </div>
+        <p>© 2026 DIRMS · A community disaster preparedness project.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" hidden="" id="centerMapModal">
+      <div
+        aria-labelledby="centerMapTitle"
+        aria-modal="true"
+        class="modal-card center-map-modal"
+        role="dialog"
+      >
+        <button
+          aria-label="Close map"
+          class="modal-close"
+          data-close-modal=""
+          type="button"
+        >
+          ×</button
+        ><span class="eyebrow">EVACUATION CENTER LOCATION</span>
+        <h2 id="centerMapTitle">Evacuation center map</h2>
+        <p class="map-address" id="centerMapAddress"></p>
+        <p class="map-accuracy" id="centerMapAccuracy"></p>
+        <div class="center-map-frame" id="centerMapFrame"></div>
+        <div class="map-actions">
+          <a
+            class="btn btn-blue"
+            href="https://www.google.com/maps"
+            id="centerMapOpenGoogle"
+            rel="noopener noreferrer"
+            target="_blank"
+            >Open Google Maps ↗</a
+          ><button class="btn btn-outline" data-close-modal="" type="button">
+            Close
+          </button>
+        </div>
+        <p class="map-fineprint">
+          Maps are provided for navigation only. Confirm the designated
+          evacuation site and access routes with local disaster officials before
+          traveling.
+        </p>
+      </div>
+    </div>
+    <div class="modal-backdrop" hidden="" id="detailModal">
+      <div
+        aria-labelledby="detailTitle"
+        aria-modal="true"
+        class="modal-card detail-card"
+        role="dialog"
+      >
+        <button
+          aria-label="Close"
+          class="modal-close"
+          data-close-modal=""
+          type="button"
+        >
+          ×
+        </button>
+        <div id="detailContent"></div>
+      </div>
+    </div>
+    <script>
+      window.BS_PREVIEW_MODE = true;
+    </script>
+    <script src="assets/js/demo-data.js"></script>
+    <script src="assets/js/app.js" defer></script>
+  </body>
+</html>
