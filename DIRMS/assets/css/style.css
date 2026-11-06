@@ -290,3 +290,83 @@ button,input,select,textarea {font-size:inherit}
 }
 @media(max-width:1020px){.top-nav a{font-size:15px}}
 @media(max-width:520px){.brand-type strong{font-size:23px}.brand-type small{font-size:10px}.home-only .hero-copy p{font-size:14px}}
+
+/* DIRMS 1.0: accessible controls and resilient public-page layouts. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+input,select,textarea{min-width:0;max-width:100%}
+button,.btn,.top-nav a,.read-more,.call-number{min-height:44px}
+button:disabled,.btn[aria-disabled=true]{cursor:wait;opacity:.7}
+.page-main p,.page-main h1,.page-main h2,.page-main h3,.empty-state,.toast,.site-footer{overflow-wrap:anywhere}
+.section-head,.receipt-reference,.receipt-actions,.center-bottom{flex-wrap:wrap}
+.top-nav .nav-logout{min-height:44px}
+.search-wrap{min-height:46px;height:auto}
+.search-wrap input{min-height:44px}
+.search-wrap input:focus-visible{outline:2px solid #2479bd;outline-offset:1px}
+.module-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 15px;color:#37566e;font-size:15px;font-weight:700}
+.module-filter select{flex:1;min-width:170px;padding:9px 12px;min-height:44px;border:1px solid #cfdee8;border-radius:7px;background:#fff;color:#193e59}
+.directory-search{margin-top:14px}
+.password-field{position:relative;min-width:0}
+.password-field input{padding-right:78px!important}
+.password-field .password-toggle{position:absolute;right:4px;bottom:3px;min-width:66px;min-height:44px;padding:6px 9px!important;margin:0!important;border:0;border-radius:5px;background:#edf5fb;color:#10598b;font-size:14px;font-weight:800}
+.password-field .password-toggle[aria-pressed=true]{background:#d7eaf7}
+.auth-card .form-stack .form-error{margin:0;font-size:15px}
+.guest-tracking-receipt{padding:14px;margin-top:12px;border:1px solid #c6d9e9;border-radius:8px;background:#f6fbff;color:#25465e}
+.tracking-code{display:block;padding:12px;margin:8px 0;font-size:16px;background:#e8f2fa;border-radius:6px;overflow-wrap:anywhere;user-select:all}
+.receipt-actions{display:flex;gap:8px;align-items:center}
+.receipt-actions .btn{font-size:13px;text-transform:none;letter-spacing:0}
+.report-receipt>div{min-width:0;flex:1}
+.receipt-reference strong{overflow-wrap:anywhere}
+.center-updated{font-size:13px;color:#596e80}
+.center-info .center-notes{font-size:14px;line-height:1.6;color:#526a7d;margin-top:5px}
+.center-info .availability{font-size:12px;line-height:1.5;flex-basis:100%}
+.center-info .map-verify.exact{color:#7b5d29}
+.hotline-item{display:grid;grid-template-columns:35px minmax(0,1fr);align-items:start}
+.hotline-item>div:last-child{grid-column:2;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-start}
+.hotline-item .call-number{display:inline-flex;align-items:center;text-align:left;white-space:normal;overflow-wrap:anywhere;font-size:16px;padding:8px 12px}
+.hotline-item .call-caption{text-align:left}
+.hotline-item .directory-source{margin-top:6px;font-size:12px;color:#596f80}
+.directory-source a{white-space:normal;font-size:13px;text-align:left;text-decoration:underline}
+.tip-title{min-width:0;overflow-wrap:anywhere}
+.tip-trigger .tip-icon,.tip-trigger .chev{flex-shrink:0}
+.modal-close{width:44px;height:44px;right:8px;top:8px}
+.detail-card h2,.center-map-modal h2{padding-right:32px}
+.modal-card{overscroll-behavior:contain}
+@media(max-width:1650px){
+ .mobile-menu{display:block;min-width:44px;min-height:44px}
+ .top-nav{display:none;position:absolute;top:100%;right:13px;left:13px;background:#fff;padding:15px;box-shadow:0 12px 28px #071d3224;border-radius:10px;flex-direction:column;align-items:stretch;gap:3px;max-height:calc(100dvh - 110px);overflow-y:auto}
+ .top-nav.open{display:flex}
+ .top-nav a{font-size:15px;padding:11px 12px}
+ .top-nav a.selected:after{display:none}
+}
+@media(max-width:520px){
+ .header-inner{padding:12px;gap:10px}
+ .brand{min-width:0;flex-shrink:1;gap:8px}
+ .brand-mark{flex-shrink:0}
+ .brand-type{min-width:0}
+ .brand-type small{max-width:170px}
+ .mobile-menu{flex-shrink:0;padding:7px 10px}
+ .hotline-hero{flex-wrap:wrap}
+ .hotline-call-main{min-height:44px}
+ .hotline-services{grid-template-columns:1fr}
+ .hotline-services a{min-height:44px;font-size:14px}
+ .hotline-services a span{display:inline}
+ .hotline-item{padding:12px;gap:8px}
+ .receipt-symbol{display:none}
+ .report-receipt{padding:12px}
+ .receipt-actions{align-items:stretch}
+ .receipt-actions .btn{width:100%}
+ .modal-backdrop{padding:10px}
+ .modal-card{max-height:calc(100dvh - 20px)}
+ .home-only .hero-actions .btn{white-space:normal}
+ .featured-alert{flex-wrap:wrap}
+ .featured-alert .btn{margin-left:auto}
+ .form-2col{grid-template-columns:minmax(0,1fr)}
+ .interior-content>.panel{padding:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+.skip-link{position:fixed;top:8px;left:8px;z-index:1000;transform:translateY(-150%);padding:12px 18px;border-radius:7px;background:#082b47;color:#fff;font-weight:800;box-shadow:0 4px 16px #092b4633}
+.skip-link:focus{transform:none;outline:3px solid #80c8ff;outline-offset:3px}
+.notification-count{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;padding:2px 6px;border-radius:20px;background:#c91f30;color:#fff;font-size:12px;line-height:1;font-weight:800}

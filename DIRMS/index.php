@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/app/security-headers.php';
+securityHeaders();
+require_once __DIR__ . '/app/tracking-view.php';
 $page = $page ?? 'home';
-$knownPages = ['home','alerts','report','centers','hotlines','tips','news','login','register','my-reports'];
+$knownPages = ['home','alerts','report','centers','hotlines','tips','news','login','register','my-reports','track-report'];
 if (!in_array($page, $knownPages, true)) { http_response_code(404); exit('Page not found.'); }
 function publicPageBody(string $page): void { ?>
 <?php if ($page === 'home'): ?>
@@ -45,16 +48,16 @@ function publicPageBody(string $page): void { ?>
 <?php if ($page === 'register'): ?>
 <main class="page-main interior-page interior-register"><div class="interior-intro"><span class="feature-kicker">JOIN THE COMMUNITY</span><h1>Register</h1><p>Create a resident account and keep track of incidents you report.</p></div><div class="interior-content"><div class="auth-page-container" id="authPanel"><div aria-labelledby="authTitle" class="modal-card auth-card auth-card-inline"><div class="auth-header"><span class="auth-icon">✦</span><h2 id="authTitle">Welcome back</h2><p id="authSubtitle">Sign in to access your community account.</p></div><div class="auth-switch"><a class="active" data-auth-tab="login" href="login.php">Login</a><a data-auth-tab="register" href="register.php">Register</a></div><form class="form-stack" id="loginForm"><label>Email<input autocomplete="email" name="email" placeholder="you@example.com" required="" type="email"/></label><label>Password<input autocomplete="current-password" name="password" placeholder="Your password" required="" type="password"/></label><button class="btn btn-blue" type="submit">Login to Account →</button></form><form class="form-stack" hidden="" id="registerForm"><label>Full Name<input maxlength="120" minlength="2" name="full_name" placeholder="Enter your name" required=""/></label><label>Email<input name="email" placeholder="you@example.com" required="" type="email"/></label><label>Phone Number <small>(optional)</small><input maxlength="35" name="phone" placeholder="Phone number"/></label><label>Password<input autocomplete="new-password" minlength="8" name="password" placeholder="At least 8 characters" required="" type="password"/></label><label>Confirm Password<input autocomplete="new-password" minlength="8" name="confirm_password" placeholder="Repeat your password" required="" type="password"/></label><button class="btn btn-blue" type="submit">Create Community Account →</button></form></div></div></div></main>
 <?php endif; ?>
-<?php if ($page === 'my-reports'): ?>
-<main class="page-main interior-page interior-my-reports"><div class="interior-intro"><span class="feature-kicker">REPORT STATUS TRACKING</span><h1>My Incident Reports</h1><p>View your submitted incidents and the latest administrator review status.</p></div><div class="interior-content"><section class="panel my-reports-panel"><div class="section-head"><h2>Submitted Reports</h2><a class="btn btn-blue btn-sm" href="report-incident.php">+ Submit another report</a></div><div class="my-reports-guide">Only reports submitted while signed into this account can appear here. Guest reports must be followed up directly with the disaster office using their reference number.</div><div id="myReportsNotice" role="status" aria-live="polite"></div><div id="myReportsList" class="my-reports-list"><div class="skeleton" style="height:130px"></div></div><button type="button" id="refreshMyReports" class="btn btn-outline btn-sm">↻ Refresh My Reports</button></section></div></main>
-<?php endif; ?>
+<?php if (in_array($page, ['my-reports','track-report'], true)) renderTrackingPage($page === 'track-report'); ?>
 <?php } ?>
 <!doctype html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#082844"><meta name="description" content="DIRMS community disaster alerts, incident reporting, evacuation centers and preparedness.">
 <title><?= htmlspecialchars(ucwords(str_replace('-', ' ', $page)), ENT_QUOTES) ?> | DIRMS</title>
 <link rel="stylesheet" href="assets/css/style.css">
+<?php if (in_array($page, ['my-reports','track-report'], true)): ?><link rel="stylesheet" href="assets/css/tracking.css"><?php endif; ?>
 </head><body data-page="public" data-view="<?= htmlspecialchars($page, ENT_QUOTES) ?>">
+<a class="skip-link" href="#mainContent">Skip to content</a>
 <header class="site-header"><div class="header-inner">
 <a class="brand" href="index.php" aria-label="DIRMS home"><span class="brand-mark"><svg viewBox="0 0 36 40" aria-hidden="true"><path d="M18 2 33 8v13c0 10-6 15-15 18C9 36 3 31 3 21V8Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M9 20 18 11l9 9h-5v9h-8v-9Z" fill="currentColor"/><path d="M15 24h6" stroke="#fff" stroke-width="2"/></svg></span><span class="brand-type"><strong>DIRMS</strong><small>Community Disaster Management</small></span></a>
 <button class="mobile-menu" type="button" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
@@ -66,16 +69,18 @@ function publicPageBody(string $page): void { ?>
 <a <?= $page === 'hotlines' ? 'class="selected" aria-current="page"' : '' ?> href="hotlines.php">Hotlines</a>
 <a <?= $page === 'tips' ? 'class="selected" aria-current="page"' : '' ?> href="tips.php">Preparedness</a>
 <a <?= $page === 'news' ? 'class="selected" aria-current="page"' : '' ?> href="news.php">News</a>
-<a href="my-reports.php" id="myReportsNav" hidden>My Reports</a>
+<a href="track-report.php" <?= $page === 'track-report' ? 'class="selected" aria-current="page"' : '' ?>>Track Report</a>
+<a href="my-reports.php" id="myReportsNav" hidden>My Reports <span id="reportNotificationBadge" data-notification-unread class="notification-count" hidden aria-label="Unread report notifications"></span></a>
 <a href="admin.php" id="adminNav" hidden>Admin Dashboard</a>
 <a class="nav-login" href="login.php" id="accountButton">Login / Register</a>
 <button type="button" id="navLogout" class="nav-logout" hidden>Log out</button>
 </nav></div></header>
 <div class="safety-strip" id="safetyStrip"><span class="pulse-dot"></span><span id="safetyText">Demo information is not a real-time emergency alert. Check official sources.</span></div>
 <div id="toastRegion" class="toast-region" role="status" aria-live="polite"></div>
-<?php publicPageBody($page); ?>
+<div id="mainContent" tabindex="-1"><?php publicPageBody($page); ?></div>
 <footer class="site-footer"><div class="footer-inner"><div class="footer-identity"><span class="footer-seal">♜</span><span><strong>COMMUNITY DISASTER SAFETY</strong><small>San Pablo City, Laguna · DIRMS Demo Project</small></span></div><div class="footer-links"><a href="index.php">Back to top ↑</a><a href="tips.php">Safety resources</a><span id="footerEmail"></span></div><p>© <?= date('Y') ?> DIRMS · A community disaster preparedness project.</p></div></footer>
 <div class="modal-backdrop" hidden="" id="centerMapModal"><div aria-labelledby="centerMapTitle" aria-modal="true" class="modal-card center-map-modal" role="dialog"><button aria-label="Close map" class="modal-close" data-close-modal="" type="button">×</button><span class="eyebrow">EVACUATION CENTER LOCATION</span><h2 id="centerMapTitle">Evacuation center map</h2><p class="map-address" id="centerMapAddress"></p><p class="map-accuracy" id="centerMapAccuracy"></p><div class="center-map-frame" id="centerMapFrame"></div><div class="map-actions"><a class="btn btn-blue" href="https://www.google.com/maps" id="centerMapOpenGoogle" rel="noopener noreferrer" target="_blank">Open Google Maps ↗</a><button class="btn btn-outline" data-close-modal="" type="button">Close</button></div><p class="map-fineprint">Maps are provided for navigation only. Confirm the designated evacuation site and access routes with local disaster officials before traveling.</p></div></div>
 <div class="modal-backdrop" hidden="" id="detailModal"><div aria-labelledby="detailTitle" aria-modal="true" class="modal-card detail-card" role="dialog"><button aria-label="Close" class="modal-close" data-close-modal="" type="button">×</button><div id="detailContent"></div></div></div>
 <script src="assets/js/app.js" defer></script>
+<?php if (in_array($page, ['my-reports','track-report'], true)): ?><script src="assets/js/tracking.js" defer></script><?php endif; ?>
 </body></html>
