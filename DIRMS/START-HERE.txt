@@ -1,4 +1,4 @@
-DIRMS v4 — MULTIPAGE FUNCTIONAL WEBSITE
+DIRMS 1.0 — INCIDENT TRACKING
 ================================================
 
 The included folder in the ZIP is named: DIRMS
@@ -19,12 +19,13 @@ If this is an UPDATE to your current installation:
   • Copy the new website files over the old code, keeping those files safely.
   • Do NOT rerun a new database or recreate admin account.
   • Existing admin credentials continue working.
+  • Log in as admin, open upgrade.php, confirm the backup and apply the additive migration.
   • Optional: admin opens update-directory.php to add missing directory entries.
 
 PAGES:
   index.php, alerts.php, report-incident.php, evacuation-centers.php,
   hotlines.php, tips.php, news.php, login.php, register.php,
-  my-reports.php, admin.php.
+  my-reports.php, track-report.php, admin.php, upgrade.php.
 
 For design-only demonstration, open preview.html in a web browser.
 Use PHP pages through XAMPP for real database submissions.

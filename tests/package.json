@@ -1,0 +1,7 @@
+{
+  "name": "dirms-dom-tests",
+  "private": true,
+  "description": "DOM-level tracking tests; these do not replace real browser responsive checks.",
+  "scripts": {"test": "node --test"},
+  "devDependencies": {"jsdom": "26.1.0"}
+}
