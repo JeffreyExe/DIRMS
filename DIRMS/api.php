@@ -118,8 +118,16 @@ function adminSave(array $input, array $user): array {
         $existing->execute([$id]);
         $fields['is_demo'] = (int)$existing->fetchColumn();
     }
-    $savedId = insertOrUpdate($table,$fields,$id);
-    adminLog($user,$id?'updated':'created',$type,$savedId);
+    $pdo=db();
+    $pdo->beginTransaction();
+    try {
+        $savedId = insertOrUpdate($table,$fields,$id);
+        adminLog($user,$id?'updated':'created',$type,$savedId);
+        $pdo->commit();
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        throw $e;
+    }
     return ['ok'=>true,'message'=>'Saved successfully.','id'=>$savedId];
 }
 function adminDataset(): array {
@@ -314,13 +322,22 @@ try {
     }
     if ($action === 'settings_save') {
         $allowed=['site_name'=>120,'city'=>180,'contact_email'=>190,'safety_banner'=>600];
-        $q=db()->prepare('INSERT INTO site_settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)');
+        $values=[];
         foreach ($allowed as $key=>$max) {
             $value=cleanText($input[$key]??'',$max);
             if ($key==='contact_email' && $value && !filter_var($value,FILTER_VALIDATE_EMAIL)) fail('Enter a valid contact email.');
-            $q->execute([$key,$value]);
+            $values[$key]=$value;
         }
-        adminLog($admin,'updated','settings',null);
+        $pdo=db(); $pdo->beginTransaction();
+        try {
+            $q=$pdo->prepare('INSERT INTO site_settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)');
+            foreach ($values as $key=>$value) $q->execute([$key,$value]);
+            adminLog($admin,'updated','settings',null);
+            $pdo->commit();
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            throw $e;
+        }
         jsonResponse(['ok'=>true,'message'=>'Site settings updated.']);
     }
     fail('Endpoint not found.',404);
